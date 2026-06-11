@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NVIDIA Creative · T-Shirt Sizing Tool</title>
+<style>
+  :root {
+    --green: #76b900;
+    --green-dark: #5a8c00;
+    --green-light: #e8f5d0;
+    --dark: #1a1a1a;
+    --mid: #444;
+    --light: #f5f5f5;
+    --border: #ddd;
+    --white: #ffffff;
+    --xs-color: #e8f5d0;
+    --s-color: #d4edda;
+    --m-color: #fff3cd;
+    --l-color: #fde8c8;
+    --xl-color: #f8d7da;
+    --xs-border: #76b900;
+    --s-border: #28a745;
+    --m-border: #ffc107;
+    --l-border: #fd7e14;
+    --xl-border: #dc3545;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #f0f0f0;
+    color: var(--dark);
+    min-height: 100vh;
+  }
+  header {
+    background: var(--dark);
+    color: white;
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .logo {
+    width: 36px; height: 36px;
+    background: var(--green);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 14px; color: black; letter-spacing: -0.5px;
+    clip-path: polygon(0 0, 85% 0, 100% 15%, 100% 100%, 15% 100%, 0 85%);
+  }
+  header h1 { font-size: 18px; font-weight: 600; }
+  header p { font-size: 12px; color: #aaa; margin-top: 2px; }
+  .container { max-width: 800px; margin: 32px auto; padding: 0 16px 60px; }
+
+  .card {
+    background: white;
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  .card h2 {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--green-dark);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--green-light);
+  }
+
+  .field { margin-bottom: 20px; }
+  label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+  label span.hint {
+    font-weight: 400;
+    color: #888;
+    font-size: 12px;
+    margin-left: 6px;
+  }
+  select, input[type="number"], textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--dark);
+    background: white;
+    transition: border-color 0.15s;
+    font-family: inherit;
+  }
+  select:focus, input[type="number"]:focus, textarea:focus {
+    outline: none;
+    border-color: var(--green);
+  }
+  textarea { resize: vertical; min-height: 80px; }
+
+  .radio-group { display: flex; flex-wrap: wrap; gap: 8px; }
+  .radio-option {
+    flex: 1; min-width: 140px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: white;
+  }
+  .radio-option:hover { border-color: var(--green); background: var(--green-light); }
+  .radio-option.selected { border-color: var(--green); background: var(--green-light); }
+  .radio-option input[type="radio"] { display: none; }
+  .radio-option .label { font-size: 13px; font-weight: 600; color: var(--dark); }
+  .radio-option .sub { font-size: 11px; color: #888; margin-top: 2px; }
+
+  .btn-primary {
+    width: 100%;
+    padding: 14px;
+    background: var(--green);
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .btn-primary:hover { background: var(--green-dark); }
+  .btn-secondary {
+    padding: 10px 20px;
+    background: white;
+    color: var(--mid);
+    font-size: 13px;
+    font-weight: 600;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-secondary:hover { border-color: var(--green); color: var(--green-dark); }
+
+  /* Result */
+  #result { display: none; }
+  .result-header {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+    margin-bottom: 20px;
+  }
+  .size-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    font-size: 28px;
+    font-weight: 900;
+    border: 3px solid;
+    flex-shrink: 0;
+  }
+  .size-xs { background: var(--xs-color); border-color: var(--xs-border); color: var(--xs-border); }
+  .size-s  { background: var(--s-color);  border-color: var(--s-border);  color: var(--s-border);  }
+  .size-m  { background: var(--m-color);  border-color: var(--m-border);  color: #856404;  }
+  .size-l  { background: var(--l-color);  border-color: var(--l-border);  color: #7d3e00;  }
+  .size-xl { background: var(--xl-color); border-color: var(--xl-border); color: var(--xl-border); }
+
+  .result-title { flex: 1; }
+  .result-title h3 { font-size: 22px; font-weight: 800; }
+  .result-title p { font-size: 14px; color: #666; margin-top: 4px; }
+
+  .criteria-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .criteria-item {
+    background: var(--light);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .criteria-item .ci-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: #888; margin-bottom: 4px; }
+  .criteria-item .ci-value { font-size: 14px; font-weight: 700; color: var(--dark); }
+
+  .reasoning-section { margin-top: 18px; }
+  .reasoning-section h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--mid); margin-bottom: 10px; }
+  .reason-list { list-style: none; }
+  .reason-list li {
+    font-size: 13px;
+    color: var(--dark);
+    padding: 6px 10px;
+    border-left: 3px solid var(--green);
+    background: var(--green-light);
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 6px;
+  }
+  .reason-list li.flag {
+    border-left-color: #fd7e14;
+    background: #fde8c8;
+  }
+  .examples-list { margin-top: 8px; }
+  .example-chip {
+    display: inline-block;
+    background: var(--light);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: var(--mid);
+    margin: 3px 3px 3px 0;
+  }
+
+  .disclaimer {
+    margin-top: 18px;
+    font-size: 12px;
+    color: #999;
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">NV</div>
+  <div>
+    <h1>Creative T-Shirt Sizing Tool</h1>
+    <p>APM Scoping Assistant · Based on NVIDIA Creative T-Shirt Sizing Matrix v1</p>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Form -->
+  <div id="form-section">
+    <div class="card">
+      <h2>Project Details</h2>
+
+      <div class="field">
+        <label>Project Category <span class="hint">What type of creative work is this?</span></label>
+        <select id="category">
+          <option value="">— Select a category —</option>
+          <option value="Campaign & Brand">Campaign &amp; Brand</option>
+          <option value="Social & Digital">Social &amp; Digital</option>
+          <option value="Copy & Content">Copy &amp; Content</option>
+          <option value="Web">Web</option>
+          <option value="Events">Events</option>
+          <option value="Presentations">Presentations</option>
+          <option value="Video & Motion">Video &amp; Motion</option>
+          <option value="Photography">Photography</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Brief Description <span class="hint">Describe the deliverable(s) in a sentence or two</span></label>
+        <textarea id="description" placeholder="e.g. Social video cut-down from existing event footage for LinkedIn and Instagram…"></textarea>
+      </div>
+
+      <div class="field">
+        <label>Number of Deliverables / Formats <span class="hint">Total distinct outputs requested</span></label>
+        <select id="num-deliverables">
+          <option value="">— Select —</option>
+          <option value="1">1 deliverable</option>
+          <option value="2">2 deliverables</option>
+          <option value="3">3–5 deliverables</option>
+          <option value="6">6–10 deliverables</option>
+          <option value="11">11+ deliverables</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Creative Complexity</h2>
+
+      <div class="field">
+        <label>Creative Direction <span class="hint">How much creative lift is required?</span></label>
+        <div class="radio-group" id="creative-lift">
+          <label class="radio-option">
+            <input type="radio" name="creative-lift" value="templated">
+            <div class="label">Templated / Constrained</div>
+            <div class="sub">Existing template, no new decisions</div>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="creative-lift" value="guided">
+            <div class="label">Guided Execution</div>
+            <div class="sub">Direction approved, some adaptation</div>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="creative-lift" value="moderate">
+            <div class="label">Moderate Exploration</div>
+            <div class="sub">Some concepting, 1–2 directions</div>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="creative-lift" value="high">
+            <div class="label">High-Concept / New Campaign</div>
+            <div class="sub">Multiple concepts, strategic lift</div>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Estimated Rounds of Review</label>
+        <div class="radio-group" id="review-rounds">
+          <label class="radio-option">
+            <input type="radio" name="review-rounds" value="1">
+            <div class="label">1 round</div>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="review-rounds" value="2">
+            <div class="label">1–2 rounds</div>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="review-rounds" value="3">
+            <div class="label">2–3 rounds</div>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="review-rounds" value="4">
+            <div class="label">3+ rounds</div>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Number of Stakeholders <span class="hint">Approvers + requesters involved</span></label>
+        <div class="radio-group" id="stakeholders">
+          <label class="radio-option">
+            <input type="radio" name="stakeholders" value="1">
+            <div class="label">1–2 people</div>
+            <div class="sub">Requester + APM only</div>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="stakeholders" value="3">
+            <div class="label">2–3 people</div>
+            <div class="sub">+ 1 approver</div>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="stakeholders" value="5">
+            <div class="label">3–5 people</div>
+            <div class="sub">CM + 1–2 approvers</div>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="stakeholders" value="8">
+            <div class="label">5+ people</div>
+            <div class="sub">Cross-functional team</div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="calculateSize()">Get My T-Shirt Size →</button>
+  </div>
+
+  <!-- Result -->
+  <div id="result" class="card">
+    <div class="result-header">
+      <div id="size-badge" class="size-badge"></div>
+      <div class="result-title">
+        <h3 id="result-title"></h3>
+        <p id="result-subtitle"></p>
+      </div>
+      <button class="btn-secondary" onclick="resetForm()">← Start Over</button>
+    </div>
+
+    <div class="criteria-grid" id="criteria-grid"></div>
+
+    <div class="reasoning-section">
+      <h4>Why this size</h4>
+      <ul class="reason-list" id="reason-list"></ul>
+    </div>
+
+    <div class="reasoning-section" id="examples-section" style="margin-top:20px;">
+      <h4>Similar project examples from your matrix</h4>
+      <div class="examples-list" id="examples-container"></div>
+    </div>
+
+    <p class="disclaimer">
+      Sizing is based on the NVIDIA Creative T-Shirt Sizing Matrix v1 and the "3+ criteria = this size" rule. When in doubt, size up. Hours shown are combined team hours across all disciplines, assuming a well-scoped brief with no major pivots — add 25–50% buffer for unclear scope or new stakeholders.
+    </p>
+  </div>
+
+</div>
+
+<script>
+// =========================================================
+// MATRIX DATA
+// =========================================================
+const SIZES = {
+  XS: {
+    label: 'XS', name: 'Extra Small', complexity: 'Minimal',
+    duration: '< 1 day', hours: '1 – 4 hrs', rounds: '1',
+    stakeholders: '1–2', disciplines: 'Solo Designer or Copywriter',
+    criteria: [
+      'Templated or highly constrained work',
+      '1 stakeholder, no cross-functional dependencies',
+      'Light creative lift, few decisions',
+      'Minimal variables',
+      '1 round of review max'
+    ]
+  },
+  S: {
+    label: 'S', name: 'Small', complexity: 'Light',
+    duration: '1 – 2 days', hours: '4 – 16 hrs', rounds: '1–2',
+    stakeholders: '2–3', disciplines: 'Designer + Copywriter (one or both)',
+    criteria: [
+      'Light creative direction, few decisions',
+      '1–2 rounds of review',
+      'Some variables but contained scope',
+      '2–3 stakeholders max',
+      'Template-driven or low-ambiguity brief'
+    ]
+  },
+  M: {
+    label: 'M', name: 'Medium', complexity: 'Moderate',
+    duration: '2 – 5 days', hours: '16 – 40 hrs', rounds: '2–3',
+    stakeholders: '3–5', disciplines: 'Designer + Copywriter + AD (light)',
+    criteria: [
+      'Moderate creative lift',
+      'Multiple deliverables or formats',
+      '2–3 rounds of review',
+      'Several steps requiring coordination',
+      'Cross-discipline collaboration likely',
+      'Brief may require some exploration'
+    ]
+  },
+  L: {
+    label: 'L', name: 'Large', complexity: 'High',
+    duration: '5 – 10 days', hours: '40 – 80 hrs', rounds: '3',
+    stakeholders: '5–8', disciplines: 'AD + Designer + Copywriter ± Video/Motion',
+    criteria: [
+      'High-concept work requiring exploration',
+      'Multiple stakeholders + cross-functional inputs',
+      '3 rounds of review',
+      'Coordination across 2+ disciplines',
+      'Strategy or messaging alignment required'
+    ]
+  },
+  XL: {
+    label: 'XL', name: 'Extra Large', complexity: 'Strategic / Major',
+    duration: '2+ weeks', hours: '80 – 160+ hrs', rounds: '4+',
+    stakeholders: '8+', disciplines: 'Full team: AD + Designer(s) + Copywriter + Motion + Photo',
+    criteria: [
+      'Strategic, campaign-level, or event-scale work',
+      'Unclear or evolving scope at kickoff',
+      'Heavy cross-functional collaboration',
+      '4+ rounds of review',
+      '2+ weeks',
+      'Multi-team, multi-asset, multi-market',
+      'Requires dedicated resourcing plan'
+    ]
+  }
+};
+
+// Project examples from the matrix
+const EXAMPLES = {
+  XS: {
+    'Campaign & Brand': ['Asset resize / version of approved file', 'Badge or logo lockup', 'Color correction'],
+    'Social & Digital': ['Single social still — asset update', 'Email image cuts + copy review'],
+    'Copy & Content': ['Short web copy update', 'Disclaimer / legal footnote edit'],
+    'Web': ['Minor image swap on live page'],
+    'Events': ['Name badge', 'Digital signage text update'],
+    'Presentations': ['Slide data / copy update in existing deck'],
+    'Photography': ['Photo selection / retouching (1–3 images)'],
+    'Video & Motion': ['Title card edit', 'Subtitle / caption update']
+  },
+  S: {
+    'Campaign & Brand': ['Single-format promotional asset', 'Collateral refresh (brochure / 1-pager)', 'Partner co-brand asset (templated)'],
+    'Social & Digital': ['Social organic pack (3–5 assets)', 'Paid social banner set', 'GTMK localization'],
+    'Copy & Content': ['Datasheet (copy only)', 'Case study update', 'PPT small — template-based'],
+    'Web': ['Web page update — copy + imagery', 'Customer Story / Glossary page update'],
+    'Events': ['Event 1-pager', 'Tradeshow pull-up banner (template)'],
+    'Presentations': ['PPT additions to existing approved deck'],
+    'Video & Motion': ['Short social video cut-down (existing footage)', 'Animated GIF / simple loop']
+  },
+  M: {
+    'Campaign & Brand': ['Multi-format promotional package', 'Product launch support assets', 'Supporting key visual (not campaign hero)'],
+    'Social & Digital': ['Multi-asset paid social campaign', 'Zero-click landing page'],
+    'Copy & Content': ['Technical whitepaper', 'Integrated short-form content series', 'Scriptwriting — short form'],
+    'Web': ['New webpage — simple, single page', 'Customer Story (net-new)'],
+    'Events': ['GTC / CES supporting materials (partial)', 'Event support package (signage + collateral)'],
+    'Presentations': ['Custom presentation — moderate complexity'],
+    'Video & Motion': ['Motion graphics (15–30s)', 'Short-form video edit (30–60s)', 'Animated explainer'],
+    'Photography': ['On-set direction + retouching']
+  },
+  L: {
+    'Campaign & Brand': ['New campaign concept development', 'Campaign asset suite — multi-format', 'Hero key visual — major campaign', 'GTM messaging framework'],
+    'Social & Digital': ['Integrated social campaign — paid + organic'],
+    'Copy & Content': ['Integrated campaign copy — multi-channel'],
+    'Web': ['Complex new webpage', 'Microsite design'],
+    'Events': ['GTC / CES full materials suite', 'Booth design elements (not full build)', 'Flagship event digital package'],
+    'Presentations': ['Exec presentation — fully custom'],
+    'Video & Motion': ['Video production — 2–3 min scripted', 'Event sizzle cut — complex edit'],
+    'Photography': ['Full product or campaign shoot']
+  },
+  XL: {
+    'Campaign & Brand': ['Full integrated marketing campaign', 'Major product launch campaign (GTC / CES scale)', 'Brand identity / guidelines refresh', 'Always-on campaign ecosystem'],
+    'Social & Digital': ['Major product launch digital suite'],
+    'Copy & Content': ['Global GTM playbook'],
+    'Web': ['Website section redesign (filters + tables + interactivity)'],
+    'Events': ['Full event design: GTC / CES / SC / ISC', 'Keynote concepting + design', 'Booth experiential design — full build-out'],
+    'Presentations': ['Keynote deck — GTC / CES scale'],
+    'Video & Motion': ['Anthem / brand film (5+ min)', 'GTC / CES sizzle reel (scripted, motion-heavy)', 'Full video campaign (hero + cutdowns + social)'],
+    'Photography': ['Campaign photoshoot — multi-concept / multi-location']
+  }
+};
+
+// =========================================================
+// SCORING LOGIC
+// =========================================================
+function score(inputs) {
+  // Returns {size, score, reasons, escalationReasons}
+  // Score each dimension against XS/S/M/L/XL (0–4)
+
+  const scores = { XS: 0, S: 0, M: 0, L: 0, XL: 0 };
+  const reasons = [];
+
+  // --- Creative lift ---
+  const lift = inputs.creativeLift;
+  if (lift === 'templated') {
+    scores.XS += 2; scores.S += 1;
+    reasons.push('Templated / constrained creative lift → favors XS–S');
+  } else if (lift === 'guided') {
+    scores.S += 2; scores.M += 1;
+    reasons.push('Guided execution, direction pre-approved → favors S–M');
+  } else if (lift === 'moderate') {
+    scores.M += 2; scores.L += 1;
+    reasons.push('Moderate exploration / some concepting → favors M–L');
+  } else if (lift === 'high') {
+    scores.L += 2; scores.XL += 1;
+    reasons.push('High-concept or new campaign → favors L–XL');
+  }
+
+  // --- Review rounds ---
+  const rounds = parseInt(inputs.reviewRounds);
+  if (rounds === 1) {
+    scores.XS += 2;
+    reasons.push('1 round of review → XS');
+  } else if (rounds === 2) {
+    scores.S += 2; scores.M += 1;
+    reasons.push('1–2 rounds of review → S–M');
+  } else if (rounds === 3) {
+    scores.M += 2; scores.L += 1;
+    reasons.push('2–3 rounds of review → M–L');
+  } else if (rounds === 4) {
+    scores.L += 1; scores.XL += 2;
+    reasons.push('3+ rounds of review → L–XL');
+  }
+
+  // --- Stakeholders ---
+  const s = parseInt(inputs.stakeholders);
+  if (s === 1) {
+    scores.XS += 2;
+    reasons.push('1–2 stakeholders → XS');
+  } else if (s === 3) {
+    scores.S += 2; scores.M += 1;
+    reasons.push('2–3 stakeholders → S–M');
+  } else if (s === 5) {
+    scores.M += 2; scores.L += 1;
+    reasons.push('3–5 stakeholders → M–L');
+  } else if (s === 8) {
+    scores.L += 1; scores.XL += 2;
+    reasons.push('5+ stakeholders → L–XL');
+  }
+
+  // --- Number of deliverables ---
+  const nd = inputs.numDeliverables;
+  if (nd === '1') {
+    scores.XS += 2; scores.S += 1;
+    reasons.push('1 deliverable → XS–S');
+  } else if (nd === '2') {
+    scores.S += 2; scores.M += 1;
+    reasons.push('2 deliverables → S–M');
+  } else if (nd === '3') {
+    scores.M += 2; scores.S += 1;
+    reasons.push('3–5 deliverables → M');
+  } else if (nd === '6') {
+    scores.L += 2; scores.M += 1;
+    reasons.push('6–10 deliverables → L');
+  } else if (nd === '11') {
+    scores.XL += 2; scores.L += 1;
+    reasons.push('11+ deliverables → XL');
+  }
+
+  // Find raw winner
+  let bestSize = 'S';
+  let bestScore = -1;
+  const order = ['XS', 'S', 'M', 'L', 'XL'];
+  for (const sz of order) {
+    if (scores[sz] > bestScore) {
+      bestScore = scores[sz];
+      bestSize = sz;
+    }
+  }
+
+  return { size: bestSize, scores, reasons };
+}
+
+// =========================================================
+// UI
+// =========================================================
+// Handle radio/checkbox styling
+document.querySelectorAll('.radio-option input[type="radio"]').forEach(input => {
+  input.addEventListener('change', () => {
+    document.querySelectorAll(`.radio-option input[name="${input.name}"]`).forEach(r => {
+      r.closest('.radio-option').classList.toggle('selected', r.checked);
+    });
+  });
+});
+
+document.querySelectorAll('.checkbox-option input[type="checkbox"]').forEach(input => {
+  input.addEventListener('change', () => {
+    input.closest('.checkbox-option').classList.toggle('checked', input.checked);
+  });
+});
+
+function getRadioValue(name) {
+  const el = document.querySelector(`input[name="${name}"]:checked`);
+  return el ? el.value : null;
+}
+
+function calculateSize() {
+  // Validate
+  const category = document.getElementById('category').value;
+  const nd = document.getElementById('num-deliverables').value;
+  const creativeLift = getRadioValue('creative-lift');
+  const reviewRounds = getRadioValue('review-rounds');
+  const stakeholders = getRadioValue('stakeholders');
+
+  if (!category || !nd || !creativeLift || !reviewRounds || !stakeholders) {
+    alert('Please complete all required fields before submitting.');
+    return;
+  }
+
+  const inputs = { category, numDeliverables: nd, creativeLift, reviewRounds, stakeholders };
+  const result = score(inputs);
+
+  renderResult(result, inputs);
+}
+
+function renderResult(result, inputs) {
+  const sz = result.size;
+  const info = SIZES[sz];
+
+  // Badge
+  const badge = document.getElementById('size-badge');
+  badge.textContent = sz;
+  badge.className = 'size-badge size-' + sz.toLowerCase();
+
+  // Title
+  document.getElementById('result-title').textContent = `${sz} — ${info.name} (${info.complexity})`;
+  document.getElementById('result-subtitle').textContent = `${info.duration} · ${info.hours} · ${info.rounds} round(s) of review`;
+
+  // Criteria grid
+  const grid = document.getElementById('criteria-grid');
+  grid.innerHTML = `
+    <div class="criteria-item"><div class="ci-label">Duration</div><div class="ci-value">${info.duration}</div></div>
+    <div class="criteria-item"><div class="ci-label">Team Hours</div><div class="ci-value">${info.hours}</div></div>
+    <div class="criteria-item"><div class="ci-label">Review Rounds</div><div class="ci-value">${info.rounds}</div></div>
+    <div class="criteria-item"><div class="ci-label">Stakeholders</div><div class="ci-value">${info.stakeholders}</div></div>
+    <div class="criteria-item"><div class="ci-label">Disciplines</div><div class="ci-value">${info.disciplines}</div></div>
+    <div class="criteria-item"><div class="ci-label">Complexity</div><div class="ci-value">${info.complexity}</div></div>
+  `;
+
+  // Reasons
+  const list = document.getElementById('reason-list');
+  list.innerHTML = result.reasons.map(r => `<li>${r}</li>`).join('');
+
+  // Examples
+  const examplesByCategory = EXAMPLES[sz];
+  const examplesForCategory = examplesByCategory[inputs.category] || [];
+  const examplesContainer = document.getElementById('examples-container');
+  if (examplesForCategory.length > 0) {
+    examplesContainer.innerHTML = examplesForCategory.map(e => `<span class="example-chip">${e}</span>`).join('');
+    document.getElementById('examples-section').style.display = 'block';
+  } else {
+    document.getElementById('examples-section').style.display = 'none';
+  }
+
+  // Show/hide
+  document.getElementById('form-section').style.display = 'none';
+  document.getElementById('result').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function resetForm() {
+  document.getElementById('form-section').style.display = 'block';
+  document.getElementById('result').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
