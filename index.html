@@ -156,20 +156,6 @@
   }
   .btn-secondary:hover { border-color: var(--green); color: var(--green-dark); }
 
-  /* Guidance note */
-  .guidance-note {
-    display: none;
-    background: #fff8e6;
-    border-left: 4px solid var(--m-border);
-    border-radius: 0 8px 8px 0;
-    padding: 10px 14px;
-    font-size: 13px;
-    color: #6b4c00;
-    margin-top: 8px;
-    line-height: 1.5;
-  }
-  .guidance-note.visible { display: block; }
-  .guidance-note strong { font-weight: 700; }
 
 
   /* Result */
@@ -337,22 +323,6 @@
         </div>
       </div>
 
-      <!-- Guidance notes per category -->
-      <div class="guidance-note" id="guidance-video">
-        <strong>Video &amp; Motion sizing note:</strong> Small (S) is reserved for social edits only — re-cutting existing footage for social platforms. Any new production, scripted video, or motion work beyond a social cut lands at M or higher. The majority of video requests fall into <strong>L or XL</strong> territory.
-      </div>
-      <div class="guidance-note" id="guidance-photo">
-        <strong>Photography sizing note:</strong> Small (S) applies to retouching and light Photoshop updates only. Any work requiring new photography — even a minimal shoot — will exceed Small. The majority of photography requests fall into <strong>M, L, or XL</strong> territory.
-      </div>
-      <div class="guidance-note" id="guidance-3d">
-        <strong>3D &amp; Animation sizing note:</strong> Templates exist at <strong>L and XL only</strong>. 3D animation and render work almost always requires significant production time, modeling, and rendering. This category starts at L — if your scope feels like L, size up to XL when in doubt.
-      </div>
-      <div class="guidance-note" id="guidance-copy">
-        <strong>Copy &amp; Content sizing note:</strong> Templates are available for XS, S, and M. Larger copy requests (L–XL integrated campaigns, GTM playbooks) typically pair with a Campaign &amp; Brand project rather than standing alone.
-      </div>
-      <div class="guidance-note" id="guidance-social">
-        <strong>Social &amp; Digital sizing note:</strong> Social Media templates run XS through M. Larger social campaign packages (integrated paid + organic, launch suites) are scoped as L and use Campaign &amp; Brand templates. This category caps at L.
-      </div>
 
       <div class="field">
         <label>Brief Description <span class="hint">Describe the deliverable(s) in a sentence or two</span></label>
@@ -621,30 +591,12 @@ const GEAR_SIZES = {
 function onCategoryChange() {
   const cat = document.getElementById('category').value;
 
-  // Hide all guidance notes
-  document.querySelectorAll('.guidance-note').forEach(n => n.classList.remove('visible'));
-
   // Hide pres subtype
   document.getElementById('pres-subtype-field').classList.remove('visible');
 
   // Category-specific UI
   if (cat === 'Presentations') {
     document.getElementById('pres-subtype-field').classList.add('visible');
-  }
-  if (cat === 'Video & Motion') {
-    document.getElementById('guidance-video').classList.add('visible');
-  }
-  if (cat === 'Photography') {
-    document.getElementById('guidance-photo').classList.add('visible');
-  }
-  if (cat === '3D & Animation') {
-    document.getElementById('guidance-3d').classList.add('visible');
-  }
-  if (cat === 'Copy & Content') {
-    document.getElementById('guidance-copy').classList.add('visible');
-  }
-  if (cat === 'Social & Digital') {
-    document.getElementById('guidance-social').classList.add('visible');
   }
 }
 
