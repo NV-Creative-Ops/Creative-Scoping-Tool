@@ -1,5 +1,3 @@
-
-Index source · TXT
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,7 +51,7 @@ Index source · TXT
   header h1 { font-size: 18px; font-weight: 600; }
   header p { font-size: 12px; color: #aaa; margin-top: 2px; }
   .container { max-width: 800px; margin: 32px auto; padding: 0 16px 60px; }
- 
+
   .card {
     background: white;
     border-radius: 12px;
@@ -71,7 +69,7 @@ Index source · TXT
     padding-bottom: 10px;
     border-bottom: 2px solid var(--green-light);
   }
- 
+
   .field { margin-bottom: 20px; }
   label {
     display: block;
@@ -102,11 +100,11 @@ Index source · TXT
     border-color: var(--green);
   }
   textarea { resize: vertical; min-height: 80px; }
- 
+
   /* Sub-type selector */
   .subtype-field { display: none; }
   .subtype-field.visible { display: block; }
- 
+
   .radio-group { display: flex; flex-wrap: wrap; gap: 8px; }
   .radio-option {
     flex: 1; min-width: 140px;
@@ -122,7 +120,7 @@ Index source · TXT
   .radio-option input[type="radio"] { display: none; }
   .radio-option .label { font-size: 13px; font-weight: 600; color: var(--dark); }
   .radio-option .sub { font-size: 11px; color: #888; margin-top: 2px; }
- 
+
   /* Subtype special styling */
   .radio-option.keynote-option { border-color: var(--xl-border); }
   .radio-option.keynote-option .label { color: var(--xl-border); }
@@ -130,7 +128,7 @@ Index source · TXT
   .radio-option.special-addr-option { border-color: var(--l-border); }
   .radio-option.special-addr-option .label { color: #7d3e00; }
   .radio-option.special-addr-option.selected { background: var(--l-color); border-color: var(--l-border); }
- 
+
   .btn-primary {
     width: 100%;
     padding: 14px;
@@ -157,7 +155,7 @@ Index source · TXT
     transition: all 0.15s;
   }
   .btn-secondary:hover { border-color: var(--green); color: var(--green-dark); }
- 
+
   /* Guidance note */
   .guidance-note {
     display: none;
@@ -172,7 +170,7 @@ Index source · TXT
   }
   .guidance-note.visible { display: block; }
   .guidance-note strong { font-weight: 700; }
- 
+
   /* Template badge */
   .template-tags {
     display: none;
@@ -191,7 +189,7 @@ Index source · TXT
   }
   .template-tag.available { background: var(--green-light); border-color: var(--green); color: var(--green-dark); font-weight: 600; }
   .template-tag.unavailable { text-decoration: line-through; color: #bbb; }
- 
+
   /* Result */
   #result { display: none; }
   .result-header {
@@ -213,11 +211,11 @@ Index source · TXT
   .size-m  { background: var(--m-color);  border-color: var(--m-border);  color: #856404;  }
   .size-l  { background: var(--l-color);  border-color: var(--l-border);  color: #7d3e00;  }
   .size-xl { background: var(--xl-color); border-color: var(--xl-border); color: var(--xl-border); }
- 
+
   .result-title { flex: 1; }
   .result-title h3 { font-size: 22px; font-weight: 800; }
   .result-title p { font-size: 14px; color: #666; margin-top: 4px; }
- 
+
   .criteria-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
@@ -231,7 +229,7 @@ Index source · TXT
   }
   .criteria-item .ci-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: #888; margin-bottom: 4px; }
   .criteria-item .ci-value { font-size: 14px; font-weight: 700; color: var(--dark); }
- 
+
   .reasoning-section { margin-top: 18px; }
   .reasoning-section h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--mid); margin-bottom: 10px; }
   .reason-list { list-style: none; }
@@ -253,7 +251,7 @@ Index source · TXT
     background: var(--xl-color);
     font-weight: 600;
   }
- 
+
   .override-section {
     display: none;
     margin-top: 14px;
@@ -265,7 +263,7 @@ Index source · TXT
   }
   .override-section.visible { display: block; }
   .override-section a { color: var(--green-dark); cursor: pointer; text-decoration: underline; font-weight: 600; }
- 
+
   .examples-list { margin-top: 8px; }
   .example-chip {
     display: inline-block;
@@ -277,7 +275,7 @@ Index source · TXT
     color: var(--mid);
     margin: 3px 3px 3px 0;
   }
- 
+
   .disclaimer {
     margin-top: 18px;
     font-size: 12px;
@@ -285,7 +283,7 @@ Index source · TXT
     border-top: 1px solid var(--border);
     padding-top: 14px;
   }
- 
+
   /* Workfront template note */
   .wf-template-note {
     display: none;
@@ -301,7 +299,7 @@ Index source · TXT
 </style>
 </head>
 <body>
- 
+
 <header>
   <div class="logo">NV</div>
   <div>
@@ -309,14 +307,14 @@ Index source · TXT
     <p>APM Scoping Assistant · Based on NVIDIA Creative T-Shirt Sizing Matrix v1</p>
   </div>
 </header>
- 
+
 <div class="container">
- 
+
   <!-- Form -->
   <div id="form-section">
     <div class="card">
       <h2>Project Details</h2>
- 
+
       <div class="field">
         <label>Project Category <span class="hint">What type of creative work is this?</span></label>
         <select id="category" onchange="onCategoryChange()">
@@ -332,11 +330,11 @@ Index source · TXT
           <option value="Video & Motion">Video &amp; Motion</option>
           <option value="Web">Web</option>
         </select>
- 
+
         <!-- Template availability for selected category -->
         <div class="template-tags" id="template-tags"></div>
       </div>
- 
+
       <!-- Presentation sub-type — only shown for Presentations -->
       <div class="field subtype-field" id="pres-subtype-field">
         <label>Presentation Type <span class="hint">This affects sizing directly</span></label>
@@ -358,7 +356,7 @@ Index source · TXT
           </label>
         </div>
       </div>
- 
+
       <!-- Guidance notes per category -->
       <div class="guidance-note" id="guidance-video">
         <strong>Video &amp; Motion sizing note:</strong> Small (S) is reserved for social edits only — re-cutting existing footage for social platforms. Any new production, scripted video, or motion work beyond a social cut lands at M or higher. The majority of video requests fall into <strong>L or XL</strong> territory.
@@ -375,12 +373,12 @@ Index source · TXT
       <div class="guidance-note" id="guidance-social">
         <strong>Social &amp; Digital sizing note:</strong> Social Media templates run XS through M. Larger social campaign packages (integrated paid + organic, launch suites) are scoped as L and use Campaign &amp; Brand templates. This category caps at L.
       </div>
- 
+
       <div class="field">
         <label>Brief Description <span class="hint">Describe the deliverable(s) in a sentence or two</span></label>
         <textarea id="description" placeholder="e.g. Social video cut-down from existing event footage for LinkedIn and Instagram…"></textarea>
       </div>
- 
+
       <div class="field">
         <label>Number of Deliverables / Formats <span class="hint">Total distinct outputs requested</span></label>
         <select id="num-deliverables">
@@ -393,10 +391,10 @@ Index source · TXT
         </select>
       </div>
     </div>
- 
+
     <div class="card" id="complexity-card">
       <h2>Creative Complexity</h2>
- 
+
       <div class="field">
         <label>Creative Direction <span class="hint">How much creative lift is required?</span></label>
         <div class="radio-group" id="creative-lift">
@@ -422,7 +420,7 @@ Index source · TXT
           </label>
         </div>
       </div>
- 
+
       <div class="field">
         <label>Estimated Rounds of Review</label>
         <div class="radio-group" id="review-rounds">
@@ -444,7 +442,7 @@ Index source · TXT
           </label>
         </div>
       </div>
- 
+
       <div class="field">
         <label>Number of Stakeholders <span class="hint">Approvers + requesters involved</span></label>
         <div class="radio-group" id="stakeholders">
@@ -471,10 +469,10 @@ Index source · TXT
         </div>
       </div>
     </div>
- 
+
     <button class="btn-primary" onclick="calculateSize()">Get My T-Shirt Size →</button>
   </div>
- 
+
   <!-- Result -->
   <div id="result" class="card">
     <div class="result-header">
@@ -485,33 +483,33 @@ Index source · TXT
       </div>
       <button class="btn-secondary" onclick="resetForm()">← Start Over</button>
     </div>
- 
+
     <div class="criteria-grid" id="criteria-grid"></div>
- 
+
     <div class="reasoning-section">
       <h4>Why this size</h4>
       <ul class="reason-list" id="reason-list"></ul>
     </div>
- 
+
     <div class="override-section" id="override-section">
       <span id="override-text"></span>
       <a onclick="showOverrideResult()">See calculated size instead →</a>
     </div>
- 
+
     <div class="wf-template-note" id="wf-template-note"></div>
- 
+
     <div class="reasoning-section" id="examples-section" style="margin-top:20px;">
       <h4>Similar project examples from your matrix</h4>
       <div class="examples-list" id="examples-container"></div>
     </div>
- 
+
     <p class="disclaimer">
       Sizing is based on the NVIDIA Creative T-Shirt Sizing Matrix v1 and the "3+ criteria = this size" rule. When in doubt, size up. Hours shown are combined team hours across all disciplines, assuming a well-scoped brief with no major pivots — add 25–50% buffer for unclear scope or new stakeholders.
     </p>
   </div>
- 
+
 </div>
- 
+
 <script>
 // =========================================================
 // MATRIX DATA
@@ -543,7 +541,7 @@ const SIZES = {
     stakeholders: '8+', disciplines: 'Full team: AD + Designer(s) + Copywriter + Motion + Photo'
   }
 };
- 
+
 // Valid sizes per category — determined by available Workfront templates
 // Scores that land outside this range are clamped to the nearest valid size.
 const CATEGORY_SIZES = {
@@ -558,7 +556,7 @@ const CATEGORY_SIZES = {
   '3D & Animation':             ['L', 'XL'],                 // 3D Animation & Render Stills: L and XL only
   'Gear, Gifting & Giveaways':  ['S', 'M', 'L', 'XL']       // No XS gear template
 };
- 
+
 // Template label text per category
 const CATEGORY_TEMPLATE_LABELS = {
   'Campaign & Brand':           'Templates: XS · S · M · L · XL',
@@ -572,7 +570,7 @@ const CATEGORY_TEMPLATE_LABELS = {
   '3D & Animation':             'Templates: L · XL  (3D Animation and 3D Render Stills templates only)',
   'Gear, Gifting & Giveaways':  'Templates: S · M · L · XL'
 };
- 
+
 // WF template names per category + size
 const WF_TEMPLATES = {
   'Gear, Gifting & Giveaways': {
@@ -582,7 +580,7 @@ const WF_TEMPLATES = {
     XL: 'WF OPT HQ – Gear, Gifting, Giveaways (X-Large) · ~60.1 Days · 146.5 Hrs'
   }
 };
- 
+
 // Project examples from the matrix
 const EXAMPLES = {
   XS: {
@@ -641,7 +639,7 @@ const EXAMPLES = {
     'Gear, Gifting & Giveaways': ['Exec gift suite (custom box, bespoke item, handwritten card)', 'VIP event gifting drop (custom-manufactured, limited run)', 'CEO / board gifting program', 'Custom gear for exec speakers at GTC / CES']
   }
 };
- 
+
 // Gear Gifting size data overrides (different hours from standard matrix)
 const GEAR_SIZES = {
   S: { duration: '~1 month', hours: '18.5 hrs', rounds: '2' },
@@ -649,19 +647,19 @@ const GEAR_SIZES = {
   L: { duration: '~2 months', hours: '87 hrs', rounds: '3' },
   XL: { duration: '~3 months', hours: '146.5 hrs', rounds: '4+' }
 };
- 
+
 // =========================================================
 // CATEGORY CHANGE HANDLER
 // =========================================================
 function onCategoryChange() {
   const cat = document.getElementById('category').value;
- 
+
   // Hide all guidance notes
   document.querySelectorAll('.guidance-note').forEach(n => n.classList.remove('visible'));
- 
+
   // Hide pres subtype
   document.getElementById('pres-subtype-field').classList.remove('visible');
- 
+
   // Show template tags
   const tagsEl = document.getElementById('template-tags');
   if (cat && CATEGORY_TEMPLATE_LABELS[cat]) {
@@ -670,7 +668,7 @@ function onCategoryChange() {
   } else {
     tagsEl.classList.remove('visible');
   }
- 
+
   // Category-specific UI
   if (cat === 'Presentations') {
     document.getElementById('pres-subtype-field').classList.add('visible');
@@ -691,16 +689,16 @@ function onCategoryChange() {
     document.getElementById('guidance-social').classList.add('visible');
   }
 }
- 
+
 // =========================================================
 // SCORING LOGIC
 // =========================================================
 const SIZE_ORDER = ['XS', 'S', 'M', 'L', 'XL'];
- 
+
 function score(inputs) {
   const scores = { XS: 0, S: 0, M: 0, L: 0, XL: 0 };
   const reasons = [];
- 
+
   // Creative lift
   const lift = inputs.creativeLift;
   if (lift === 'templated') {
@@ -716,7 +714,7 @@ function score(inputs) {
     scores.L += 2; scores.XL += 1;
     reasons.push('High-concept or new campaign → favors L–XL');
   }
- 
+
   // Review rounds
   const rounds = parseInt(inputs.reviewRounds);
   if (rounds === 1) {
@@ -732,7 +730,7 @@ function score(inputs) {
     scores.L += 1; scores.XL += 2;
     reasons.push('3+ rounds of review → L–XL');
   }
- 
+
   // Stakeholders
   const s = parseInt(inputs.stakeholders);
   if (s === 1) {
@@ -748,7 +746,7 @@ function score(inputs) {
     scores.L += 1; scores.XL += 2;
     reasons.push('5+ stakeholders → L–XL');
   }
- 
+
   // Deliverables
   const nd = inputs.numDeliverables;
   if (nd === '1') {
@@ -767,7 +765,7 @@ function score(inputs) {
     scores.XL += 2; scores.L += 1;
     reasons.push('11+ deliverables → XL');
   }
- 
+
   // Find raw winner
   let bestSize = 'S';
   let bestScore = -1;
@@ -777,10 +775,10 @@ function score(inputs) {
       bestSize = sz;
     }
   }
- 
+
   return { size: bestSize, scores, reasons };
 }
- 
+
 function clampToCategory(size, category) {
   const allowed = CATEGORY_SIZES[category];
   if (!allowed) return size;
@@ -795,20 +793,20 @@ function clampToCategory(size, category) {
   if (idx > maxIdx) return allowed[allowed.length - 1];
   return size;
 }
- 
+
 // =========================================================
 // STATE (for override flow)
 // =========================================================
 let _lastResult = null;
 let _lastInputs = null;
 let _calculatedSize = null; // before category clamp or special override
- 
+
 function showOverrideResult() {
   if (!_calculatedSize || !_lastInputs) return;
   const overriddenResult = Object.assign({}, _lastResult, { size: _calculatedSize, overridden: true });
   renderResult(overriddenResult, _lastInputs, true);
 }
- 
+
 // =========================================================
 // MAIN CALCULATE
 // =========================================================
@@ -819,7 +817,7 @@ function calculateSize() {
   const reviewRounds = getRadioValue('review-rounds');
   const stakeholders = getRadioValue('stakeholders');
   const presSubtype = getRadioValue('pres-subtype');
- 
+
   // Validation
   if (!category) { alert('Please select a project category.'); return; }
   if (!nd || !creativeLift || !reviewRounds || !stakeholders) {
@@ -835,10 +833,10 @@ function calculateSize() {
     alert('Please select a Presentation Type.');
     return;
   }
- 
+
   const inputs = { category, numDeliverables: nd, creativeLift, reviewRounds, stakeholders, presSubtype };
   _lastInputs = inputs;
- 
+
   // --- Keynote: always XL (strong default, allow override) ---
   if (category === 'Presentations' && presSubtype === 'keynote') {
     _lastResult = { size: 'XL', scores: {}, reasons: ['Keynote presentations are always XL — full deck, stage visuals, and motion packages require the full team and 4+ weeks.'] };
@@ -850,7 +848,7 @@ function calculateSize() {
     });
     return;
   }
- 
+
   // --- Special Address: default L, allow seeing calculated size ---
   if (category === 'Presentations' && presSubtype === 'special-address') {
     const raw = score(inputs);
@@ -867,25 +865,25 @@ function calculateSize() {
     });
     return;
   }
- 
+
   // --- Standard flow ---
   const raw = score(inputs);
   const clampedSize = clampToCategory(raw.size, category);
   _calculatedSize = raw.size;
- 
+
   const clamped = clampedSize !== raw.size;
   if (clamped) {
     const allowed = CATEGORY_SIZES[category];
     raw.reasons.push(`⚠️ Raw score was ${raw.size}, but no ${raw.size} template exists for ${category}. Size clamped to ${clampedSize} (available: ${allowed.join(', ')}).`);
   }
- 
+
   raw.size = clampedSize;
   _lastResult = raw;
- 
+
   // Contextual flags
   let wfNote = null;
   const showOverride = false;
- 
+
   if (category === 'Photography' && clampedSize === 'S') {
     raw.reasons.push('⚠️ Photography S = retouching and light Photoshop updates only. If new photography is needed at any scope, move to M.');
   }
@@ -904,10 +902,10 @@ function calculateSize() {
   if (category === 'Presentations') {
     wfNote = '📋 Use the Presentation template in Workfront. Standard decks: S, M, or L. Keynotes: always XL.';
   }
- 
+
   renderResult(raw, inputs, false, { wfNote, showOverride });
 }
- 
+
 // =========================================================
 // RENDER RESULT
 // =========================================================
@@ -916,18 +914,18 @@ function renderResult(result, inputs, isOverride, opts) {
   const sz = result.size;
   const isGear = inputs.category === 'Gear, Gifting & Giveaways';
   const info = (isGear && GEAR_SIZES[sz]) ? Object.assign({}, SIZES[sz], GEAR_SIZES[sz]) : SIZES[sz];
- 
+
   if (!info) return;
- 
+
   // Badge
   const badge = document.getElementById('size-badge');
   badge.textContent = sz;
   badge.className = 'size-badge size-' + sz.toLowerCase();
- 
+
   // Title
   document.getElementById('result-title').textContent = `${sz} — ${info.name} (${info.complexity})`;
   document.getElementById('result-subtitle').textContent = `${info.duration} · ${info.hours} · ${info.rounds} round(s) of review`;
- 
+
   // Criteria grid
   const grid = document.getElementById('criteria-grid');
   grid.innerHTML = `
@@ -938,7 +936,7 @@ function renderResult(result, inputs, isOverride, opts) {
     <div class="criteria-item"><div class="ci-label">Disciplines</div><div class="ci-value">${info.disciplines}</div></div>
     <div class="criteria-item"><div class="ci-label">Complexity</div><div class="ci-value">${info.complexity}</div></div>
   `;
- 
+
   // Reasons
   const list = document.getElementById('reason-list');
   list.innerHTML = result.reasons.map(r => {
@@ -946,7 +944,7 @@ function renderResult(result, inputs, isOverride, opts) {
     const isStrong = r.toLowerCase().includes('always xl') || r.toLowerCase().includes('keynote');
     return `<li class="${isStrong ? 'strong-flag' : isFlag ? 'flag' : ''}">${r}</li>`;
   }).join('');
- 
+
   // Override section
   const overrideEl = document.getElementById('override-section');
   if (opts.showOverride && opts.overrideText) {
@@ -955,7 +953,7 @@ function renderResult(result, inputs, isOverride, opts) {
   } else {
     overrideEl.classList.remove('visible');
   }
- 
+
   // WF Template note
   const wfEl = document.getElementById('wf-template-note');
   if (opts.wfNote) {
@@ -964,7 +962,7 @@ function renderResult(result, inputs, isOverride, opts) {
   } else {
     wfEl.classList.remove('visible');
   }
- 
+
   // Examples
   const examplesForCategory = (EXAMPLES[sz] || {})[inputs.category] || [];
   const examplesContainer = document.getElementById('examples-container');
@@ -975,13 +973,13 @@ function renderResult(result, inputs, isOverride, opts) {
   } else {
     examplesSection.style.display = 'none';
   }
- 
+
   // Show result
   document.getElementById('form-section').style.display = 'none';
   document.getElementById('result').style.display = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
- 
+
 // =========================================================
 // UTILITIES
 // =========================================================
@@ -992,12 +990,12 @@ document.querySelectorAll('.radio-option input[type="radio"]').forEach(input => 
     });
   });
 });
- 
+
 function getRadioValue(name) {
   const el = document.querySelector(`input[name="${name}"]:checked`);
   return el ? el.value : null;
 }
- 
+
 function resetForm() {
   document.getElementById('form-section').style.display = 'block';
   document.getElementById('result').style.display = 'none';
@@ -1007,5 +1005,3 @@ function resetForm() {
 </script>
 </body>
 </html>
- 
-Claude finished the response
