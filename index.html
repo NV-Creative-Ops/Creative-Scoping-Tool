@@ -331,8 +331,6 @@
           <option value="Web">Web</option>
         </select>
 
-        <!-- Template availability for selected category -->
-        <div class="template-tags" id="template-tags"></div>
       </div>
 
       <!-- Presentation sub-type — only shown for Presentations -->
@@ -659,15 +657,6 @@ function onCategoryChange() {
 
   // Hide pres subtype
   document.getElementById('pres-subtype-field').classList.remove('visible');
-
-  // Show template tags
-  const tagsEl = document.getElementById('template-tags');
-  if (cat && CATEGORY_TEMPLATE_LABELS[cat]) {
-    tagsEl.innerHTML = `<span style="font-size:12px;color:#666;padding:4px 0">${CATEGORY_TEMPLATE_LABELS[cat]}</span>`;
-    tagsEl.classList.add('visible');
-  } else {
-    tagsEl.classList.remove('visible');
-  }
 
   // Category-specific UI
   if (cat === 'Presentations') {
