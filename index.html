@@ -171,24 +171,6 @@
   .guidance-note.visible { display: block; }
   .guidance-note strong { font-weight: 700; }
 
-  /* Template badge */
-  .template-tags {
-    display: none;
-    margin-top: 8px;
-    gap: 5px;
-    flex-wrap: wrap;
-  }
-  .template-tags.visible { display: flex; }
-  .template-tag {
-    font-size: 11px;
-    background: var(--light);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 3px 9px;
-    color: var(--mid);
-  }
-  .template-tag.available { background: var(--green-light); border-color: var(--green); color: var(--green-dark); font-weight: 600; }
-  .template-tag.unavailable { text-decoration: line-through; color: #bbb; }
 
   /* Result */
   #result { display: none; }
@@ -555,19 +537,6 @@ const CATEGORY_SIZES = {
   'Gear, Gifting & Giveaways':  ['S', 'M', 'L', 'XL']       // No XS gear template
 };
 
-// Template label text per category
-const CATEGORY_TEMPLATE_LABELS = {
-  'Campaign & Brand':           'Templates: XS · S · M · L · XL',
-  'Social & Digital':           'Templates: XS · S · M · L  (Social Media caps at M; no XL social template)',
-  'Copy & Content':             'Templates: XS · S · M  (larger copy work pairs with Campaign & Brand)',
-  'Web':                        'Templates: XS · S · M · L · XL',
-  'Events':                     'Templates: XS · S · M · L · XL',
-  'Presentations':              'Templates: S · M · L · XL  (Standard decks: S–L · Keynotes: always XL · Special Addresses: default L)',
-  'Video & Motion':             'Templates: S · M · L · XL  (no XS; S = social edits only)',
-  'Photography':                'Templates: S · M · L · XL  (no XS; S = retouching/light PS only)',
-  '3D & Animation':             'Templates: L · XL  (3D Animation and 3D Render Stills templates only)',
-  'Gear, Gifting & Giveaways':  'Templates: S · M · L · XL'
-};
 
 // WF template names per category + size
 const WF_TEMPLATES = {
