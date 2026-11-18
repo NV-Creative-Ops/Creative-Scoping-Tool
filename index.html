@@ -680,7 +680,7 @@ function score(inputs) {
   let bestSize = 'S';
   let bestScore = -1;
   for (const sz of SIZE_ORDER) {
-    if (scores[sz] > bestScore) {
+    if (scores[sz] >= bestScore) {  // >= so ties resolve to the larger size ("when in doubt, size up")
       bestScore = scores[sz];
       bestSize = sz;
     }
