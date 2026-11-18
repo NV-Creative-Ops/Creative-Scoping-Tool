@@ -606,87 +606,68 @@ function onCategoryChange() {
 const SIZE_ORDER = ['XS', 'S', 'M', 'L', 'XL'];
 
 function score(inputs) {
-  const scores = { XS: 0, S: 0, M: 0, L: 0, XL: 0 };
+  // "Max of floors" model: each input sets a minimum size floor.
+  // Result = highest floor across all inputs.
+  // Guarantees: increasing any input can only hold or raise the result — never lower it.
   const reasons = [];
+  let floor = 0; // index into SIZE_ORDER; 0=XS, 1=S, 2=M, 3=L, 4=XL
+
+  const bump = (idx, label) => {
+    if (idx > floor) floor = idx;
+    reasons.push(label);
+  };
 
   // Creative lift
   const lift = inputs.creativeLift;
   if (lift === 'templated') {
-    scores.XS += 2; scores.S += 1;
-    reasons.push('Templated / constrained creative lift → favors XS–S');
+    reasons.push('Templated / constrained creative lift → XS floor');
   } else if (lift === 'guided') {
-    scores.S += 2; scores.M += 1;
-    reasons.push('Guided execution, direction pre-approved → favors S–M');
+    bump(1, 'Guided execution, direction pre-approved → S floor');
   } else if (lift === 'moderate') {
-    scores.M += 2; scores.L += 1;
-    reasons.push('Moderate exploration / some concepting → favors M–L');
+    bump(2, 'Moderate exploration / some concepting → M floor');
   } else if (lift === 'high') {
-    scores.L += 2; scores.XL += 1;
-    reasons.push('High-concept or new campaign → favors L–XL');
+    bump(2, 'High-concept or new campaign → M floor (rounds + stakeholders push higher)');
   }
 
   // Review rounds
   const rounds = parseInt(inputs.reviewRounds);
   if (rounds === 1) {
-    scores.XS += 2;
-    reasons.push('1 round of review → XS');
+    reasons.push('1 round of review → XS floor');
   } else if (rounds === 2) {
-    scores.S += 2; scores.M += 1;
-    reasons.push('1–2 rounds of review → S–M');
+    bump(1, '1–2 rounds of review → S floor');
   } else if (rounds === 3) {
-    scores.M += 2; scores.L += 1;
-    reasons.push('2–3 rounds of review → M–L');
+    bump(2, '2–3 rounds of review → M floor');
   } else if (rounds === 4) {
-    scores.L += 1; scores.XL += 2;
-    reasons.push('3+ rounds of review → L–XL');
+    bump(3, '3+ rounds of review → L floor');
   }
 
   // Stakeholders
   const s = parseInt(inputs.stakeholders);
   if (s === 1) {
-    scores.XS += 2;
-    reasons.push('1–2 stakeholders → XS');
+    reasons.push('1–2 stakeholders → XS floor');
   } else if (s === 3) {
-    scores.S += 2; scores.M += 1;
-    reasons.push('2–3 stakeholders → S–M');
+    bump(1, '2–3 stakeholders → S floor');
   } else if (s === 5) {
-    scores.M += 2; scores.L += 1;
-    reasons.push('3–5 stakeholders → M–L');
+    bump(2, '3–5 stakeholders → M floor');
   } else if (s === 8) {
-    scores.L += 1; scores.XL += 2;
-    reasons.push('5+ stakeholders → L–XL');
+    bump(3, '5+ stakeholders → L floor');
   }
 
   // Deliverables
   const nd = inputs.numDeliverables;
   if (nd === '1') {
-    scores.XS += 2; scores.S += 1;
-    reasons.push('1 deliverable → XS–S');
+    reasons.push('1 deliverable → XS floor');
   } else if (nd === '2') {
-    scores.S += 2; scores.M += 1;
-    reasons.push('2 deliverables → S–M');
+    bump(1, '2 deliverables → S floor');
   } else if (nd === '3') {
-    scores.M += 2; scores.S += 1;
-    reasons.push('3–5 deliverables → M');
+    bump(2, '3–5 deliverables → M floor');
   } else if (nd === '6') {
-    scores.L += 2; scores.M += 1;
-    reasons.push('6–10 deliverables → L');
+    bump(3, '6–10 deliverables → L floor');
   } else if (nd === '11') {
-    scores.XL += 2; scores.L += 1;
-    reasons.push('11+ deliverables → XL');
+    bump(4, '11+ deliverables → XL floor');
   }
 
-  // Find raw winner
-  let bestSize = 'S';
-  let bestScore = -1;
-  for (const sz of SIZE_ORDER) {
-    if (scores[sz] >= bestScore) {  // >= so ties resolve to the larger size ("when in doubt, size up")
-      bestScore = scores[sz];
-      bestSize = sz;
-    }
-  }
-
-  return { size: bestSize, scores, reasons };
+  return { size: SIZE_ORDER[floor], scores: {}, reasons };
 }
 
 function clampToCategory(size, category) {
